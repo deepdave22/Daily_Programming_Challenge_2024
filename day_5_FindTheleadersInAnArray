@@ -1,0 +1,26 @@
+import java.util.ArrayList;
+import java.util.Collections;
+
+public class LeadersInArray {
+
+    public static ArrayList<Integer> getLeaders(int[] numbers) {
+        ArrayList<Integer> leaderElements = new ArrayList<>();
+        int size = numbers.length;
+
+        // Start with the last element as the initial leader
+        int currentMax = numbers[size - 1];
+        leaderElements.add(currentMax);
+
+        // Traverse the array from right to left
+        for (int i = size - 2; i >= 0; i--) {
+            if (numbers[i] >= currentMax) {
+                currentMax = numbers[i];
+                leaderElements.add(currentMax);
+            }
+        }
+
+        // The leaders are added in reverse order, so reverse the list before returning
+        Collections.reverse(leaderElements);
+        return leaderElements;
+    }
+}
