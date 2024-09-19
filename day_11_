@@ -1,0 +1,29 @@
+import java.util.*;
+
+public static List<String> getPermutations(String s) {
+    List<String> result = new ArrayList<>();
+    permute(s.toCharArray(), 0, result);
+    return result;
+}
+
+private static void permute(char[] chars, int index, List<String> result) {
+    if (index == chars.length) {
+        result.add(new String(chars));
+        return;
+    }
+
+    Set<Character> swapped = new HashSet<>();
+    for (int i = index; i < chars.length; i++) {
+        if (swapped.add(chars[i])) {  // Ensure no duplicate swaps
+            swap(chars, index, i);
+            permute(chars, index + 1, result);
+            swap(chars, index, i);  // Backtrack to the original configuration
+        }
+    }
+}
+
+private static void swap(char[] chars, int i, int j) {
+    char temp = chars[i];
+    chars[i] = chars[j];
+    chars[j] = temp;
+}
