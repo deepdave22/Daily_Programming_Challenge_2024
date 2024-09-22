@@ -1,0 +1,29 @@
+public static int countSubstringsWithKDistinct(String s, int k) {
+    return countSubstringsWithAtMostKDistinct(s, k) - countSubstringsWithAtMostKDistinct(s, k - 1);
+}
+
+// Helper function to count substrings with at most k distinct characters
+private static int countSubstringsWithAtMostKDistinct(String s, int k) {
+    if (k == 0) return 0;
+    
+    HashMap<Character, Integer> charFrequencyMap = new HashMap<>();
+    int start = 0, substrCount = 0;
+    
+    for (int end = 0; end < s.length(); end++) {
+        char endChar = s.charAt(end);
+        charFrequencyMap.put(endChar, charFrequencyMap.getOrDefault(endChar, 0) + 1);
+        
+        while (charFrequencyMap.size() > k) {
+            char startChar = s.charAt(start);
+            charFrequencyMap.put(startChar, charFrequencyMap.get(startChar) - 1);
+            if (charFrequencyMap.get(startChar) == 0) {
+                charFrequencyMap.remove(startChar);
+            }
+            start++;
+        }
+        
+        substrCount += end - start + 1;
+    }
+    
+    return substrCount;
+}
