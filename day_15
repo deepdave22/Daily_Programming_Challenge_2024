@@ -1,0 +1,39 @@
+import java.util.HashMap;
+import java.util.Map;
+
+public class LongestSubstringWithoutRepeats {
+    public static int lengthOfLongestSubstring(String s) {
+        if (s == null || s.length() == 0) {
+            return 0;
+        }
+        
+        Map<Character, Integer> charMap = new HashMap<>();
+        int maxLength = 0;
+        int start = 0;
+        
+        for (int end = 0; end < s.length(); end++) {
+            char currentChar = s.charAt(end);
+            
+            if (charMap.containsKey(currentChar)) {
+                start = Math.max(charMap.get(currentChar) + 1, start);
+            }
+            
+            charMap.put(currentChar, end);
+            maxLength = Math.max(maxLength, end - start + 1);
+        }
+        
+        return maxLength;
+    }
+
+    public static void main(String[] args) {
+        // Test cases
+        String[] testCases = {"abcabcbb", "bbbbb", "pwwkew", "abcdefgh", "a"};
+        
+        for (String testCase : testCases) {
+            int result = lengthOfLongestSubstring(testCase);
+            System.out.println("Input: " + testCase);
+            System.out.println("Output: " + result);
+            System.out.println();
+        }
+    }
+}
